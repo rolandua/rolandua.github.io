@@ -5,12 +5,18 @@
 	<title>Five Things You Should Know About HTML5 - Dive Into HTML5</title>
 	<base href="http://diveintohtml5.info/">
 
-<script>
+<script type="text/javascript">
 function showToC(e) {
 	if (document.getElementById(e).innerHTML != "")
 		document.getElementById(e).innerHTML = "";
 	else
-		document.getElementById(e).innerHTML = "<a href='table-of-contents.html'>↑ Full table of contents</a><br><a href='#one'>1. It’s not one big thing</a><br><a href='#two'>2. You don’t need to throw anything away</a><br><a href='#three'>3. It’s easy to get started</a><br><a href='#four'>4. It already works</a><br><a href='#five'>5. It’s here to stay</a><br>";
+		document.getElementById(e).innerHTML = "\
+			<a href='table-of-contents.html'>↑ Full table of contents</a><br>\
+			<a href='#one'>1. It’s not one big thing</a><br>\
+			<a href='#two'>2. You don’t need to throw anything away</a><br>\
+			<a href='#three'>3. It’s easy to get started</a><br>\
+			<a href='#four'>4. It already works</a><br>\
+			<a href='#five'>5. It’s here to stay</a><br>";
 }
 </script>
 </head>
@@ -37,7 +43,7 @@ function showToC(e) {
 	<p>
 		<a href="javascript:showToC('content_table');">show table of contents</a>
 	</p>
-	<table cellpadding="0" cellspacing="0" border="0" width="30%" align="center">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" align="center">
 		<tr>
 			<td id="content_table" align="center"></td>
 		</tr>
