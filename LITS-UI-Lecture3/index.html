@@ -19,38 +19,75 @@
 	font-family: "Essays 1743";
 	src: url("f/Essays1743.eot?") format("eot"), url("f/Essays1743.woff") format("woff"), url("f/Essays1743.ttf") format("truetype");
 }
+a{
+    text-decoration: none;
+    color: #B22222;
+}
+a:link{
+    border-bottom: 1px dotted;
+}
+a:link:hover, a:visited:hover {
+    border-bottom: 1px solid;
+}
 body{
 	max-width: 960px;
 	margin: 0 auto;
-	font: 1em Libertine,serif;
+	padding: 0 2%;
+	font: 115%/1.5 Libertine,Book Antiqua,Georgia,serif;
 	word-spacing: .1em;
 }
 header{
-	margin-top: 1em;
+	margin: 1.5em 0px;
+}
+h1,h2{
+	font: 210%/1.3 "Essays 1743",Book Antiqua,Georgia,serif;
+	margin: 1.2em 0px;
+	text-shadow: 0px 0px 1px #667;
 }
 h1{
 	text-align: center;
-	font-size: 2.7em;
+	margin: 1.5em 0px;
+	font-size: 260%;
+	line-height: 1.1;
 }
 section{
-	line-height: 1.8em;
+	line-height: 1.5em;
 }
 section img{
-	float: right;
+	float: left;
 	margin: 1em;
 }
 section:nth-child(2n+1) img{
-	float: left;
+	float: right;
 }
 footer{
 	text-align: center;
 }
-.content_middle_block{
-	padding: 2em 0;
+.middle_block{
 	text-align: center;
+	margin: 1.5em 0;
 }
 .right_float{
 	float: right !important;
+}
+.epsilon{
+	text-shadow: 0px 0px 2px #667;
+	font: 175%/1 "Arial Unicode MS";
+}
+.did-you-know{
+	border: 1px solid #000;
+	background: url("i/openclipart.org_johnny_automatic_bag_of_money.png") no-repeat 99% bottom;
+	background-size: 20%;
+}
+.did-you-know h4{
+	line-height: 1;
+	color: #fff;
+	background-color: #000;
+	margin: 0;
+	padding: 4px;
+}
+.dyn-text{
+	margin: 5% 22% 7% 5%;
 }
 #table-of-contents{
 	display: none;
@@ -68,11 +105,11 @@ footer{
 	▸
 </header>
 <h1>
-	INTRODUCTION: <br/> FIVE THINGS YOU SHOULD KNOW ABOUT
+	INTRODUCTION: <br/> FIVE THINGS YOU SHOULD KNOW ABOUT HTML5
 </h1>
 
 <!-- Table of content -->
-<div class="content_middle_block">
+<div class="middle_block">
 	<a href="javascript:document.getElementById('table-of-contents').style.display=('block' ? 'none' : 'block');">show table of contents</a>
 	
 	<div id="table-of-contents">
@@ -86,11 +123,13 @@ footer{
 </div>
 <!-- //Table of content -->
 
+<p class="middle_block epsilon">❧</p>
+
 <!-- Main text -->
 <section>
 	<h2>1. It’s not one big thing</h2>
 
-	<img alt="[mock video player]" src="i/video.png">
+	<img alt="[mock video player]" src="//diveintohtml5.info/i/video.png">
 	<p>
 		You may well ask: &ldquo;How can I start using <abbr>HTML5</abbr> if older browsers don&rsquo;t support it?&rdquo; But the question itself is misleading. <abbr>HTML5</abbr> is not one big thing; it is a collection of individual features. So you can&rsquo;t detect &ldquo;<abbr>HTML5</abbr> support,&rdquo; because that doesn&rsquo;t make any sense. But you <em>can</em> detect support for individual features, like canvas, video, or geolocation.
 	</p>
@@ -104,7 +143,7 @@ footer{
 <section>
 	<h2>2. You don&rsquo;t need to throw anything away</h2>
 
-	<img src="i/forms.png" alt="[sample form controls]">
+	<img src="//diveintohtml5.info/i/forms.png" alt="[sample form controls]">
 	<p>
 		Love it or hate it, you can&rsquo;t deny that <abbr>HTML</abbr> 4 is the most successful markup format ever. <abbr>HTML5</abbr> builds on that success. You don&rsquo;t need to throw away your existing markup. You don&rsquo;t need to relearn things you already know. If your web application worked yesterday in <abbr>HTML</abbr> 4, it will still work today in <abbr>HTML5</abbr>. Period.
 	</p>
@@ -119,7 +158,7 @@ footer{
 <section>
 	<h2>3. It&rsquo;s easy to get started</h2>
 
-	<img src="i/markup-with-arrow.png" alt="[sample HTML markup]">
+	<img src="//diveintohtml5.info/i/markup-with-arrow.png" alt="[sample HTML markup]">
 	<p>
 		&ldquo;Upgrading&rdquo; to <abbr>HTML5</abbr> can be as simple as changing your <i>doctype</i>. The doctype should already be on the first line of every <abbr>HTML</abbr> page. Previous versions of <abbr>HTML</abbr> defined a lot of doctypes, and choosing the right one could be tricky. In <abbr>HTML5</abbr>, there is only one doctype:
 
@@ -135,11 +174,11 @@ footer{
 <section>
 	<h2>4. It already works</h2>
 
-	<img src="i/rel-email.png" alt="[form field with onscreen keyboard]">
+	<img src="//diveintohtml5.info/i/rel-email.png" alt="[form field with onscreen keyboard]">
 	<p>
 		Whether you want to draw on a canvas, play video, design better forms, or build web applications that work offline, you&rsquo;ll find that <abbr>HTML5</abbr> is already well-supported. Firefox, Safari, Chrome, Opera, and mobile browsers already support canvas (<a href="canvas.html">Chapter 4</a>), video (<a href="video.html">Chapter 5</a>), geolocation (<a href="geolocation.html">Chapter 6</a>), local storage (<a href="storage.html">Chapter 7</a>), and more. Google already supports microdata annotations (<a href="extensibility.html">Chapter 10</a>). Even Microsoft &mdash; rarely known for blazing the trail of standards support &mdash; supports most <abbr>HTML5</abbr> features in Internet Explorer 9.
 	</p>
-	<img src="i/gears.png" alt="[Gears saying &quot;I can help&quot;]" class="right_float">
+	<img src="//diveintohtml5.info/i/gears.png" alt="[Gears saying &quot;I can help&quot;]" class="right_float">
 	<p>
 		Each chapter of this book includes the all-too-familiar browser compatibility charts. But more importantly, each chapter includes a frank discussion of your options if you need to support older browsers. <abbr>HTML5</abbr> features like geolocation (<a href="geolocation.html">Chapter 6</a>) and video (<a href="video.html">Chapter 5</a>) were first provided by browser plugins like Gears or Flash. Other features, like canvas (<a href="canvas.html">Chapter 4</a>), can be emulated entirely in JavaScript. This book will teach you how to target the native features of modern browsers, without leaving older browsers behind.
 	</p>
@@ -161,23 +200,20 @@ footer{
 </section>
 <!-- //Main text -->
 
+<p class="middle_block epsilon">❧</p>
+
 <!-- Buy book block -->
-<table cellpadding="0" cellspacing="0" border="1" width="80%" align="center">
-	<tr><td bgcolor="black">
-		<font color="white">
-			DiD YOU KNOW?
-		</font>		
-	</td></tr>
-	<tr><td>
-		<img src="i/openclipart.org_johnny_automatic_bag_of_money.png" alt="[Donations]" class="right_float">	
-		<p>
-			In association with Google Press, O&rsquo;Reilly is distributing this book in a variety of formats, including paper, ePub, Mobi, and <abbr>DRM</abbr>-free <abbr>PDF</abbr>. The paid edition is called &ldquo;HTML5: Up &amp; Running,&rdquo; and it is available now.
-		</p>
-		<p>
-			If you liked this introduction and want to show your appreciation, you can <a href="http://www.amazon.com/HTML5-Up-Running-Mark-Pilgrim/dp/0596806027?ie=UTF8&amp;tag=diveintomark-20&amp;creativeASIN=0596806027">buy &ldquo;HTML5: Up &amp; Running&rdquo; with this affiliate link</a> or <a href="http://oreilly.com/catalog/9780596806033">buy an electronic edition directly from O&rsquo;Reilly</a>. You&rsquo;ll get a book, and I&rsquo;ll get a buck. I do not currently accept direct donations.
-		</p>	
-	</td></tr>
-</table>
+<div class="did-you-know">
+	<h4>DiD YOU KNOW?</h4>
+		<div class="dyn-text">
+			<p>
+				In association with Google Press, O&rsquo;Reilly is distributing this book in a variety of formats, including paper, ePub, Mobi, and <abbr>DRM</abbr>-free <abbr>PDF</abbr>. The paid edition is called &ldquo;HTML5: Up &amp; Running,&rdquo; and it is available now.
+			</p>
+			<p>
+				If you liked this introduction and want to show your appreciation, you can <a href="http://www.amazon.com/HTML5-Up-Running-Mark-Pilgrim/dp/0596806027?ie=UTF8&amp;tag=diveintomark-20&amp;creativeASIN=0596806027">buy &ldquo;HTML5: Up &amp; Running&rdquo; with this affiliate link</a> or <a href="http://oreilly.com/catalog/9780596806033">buy an electronic edition directly from O&rsquo;Reilly</a>. You&rsquo;ll get a book, and I&rsquo;ll get a buck. I do not currently accept direct donations.
+			</p>
+		</div>	
+</div>
 <!-- //Buy book block -->
 
 <!-- Footer -->
@@ -188,7 +224,7 @@ footer{
 	<form action="http://www.google.com/cse">
 		<input type="hidden" name="cx" value="017884302975346027366:bgclqh8nvse">
 		<input type="hidden" name="ie" value="UTF-8">
-		<input type="text" name="q" size="25" placeholder="powered by Google&trade;">&nbsp;<input type="submit" name="sa" value="Search">
+		<input type="search" name="q" size="25" placeholder="powered by Google&trade;">&nbsp;<input type="submit" name="sa" value="Search">
 	</form>		
 </footer>
 <!-- //Footer -->
