@@ -1,0 +1,28 @@
+body{
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 0 2%;
+	font: 100%/1.2 'PT Sans',Verdana,serif;
+	background-color: #000;
+	color: #fff;
+}
+header,
+footer{
+	text-align: center;
+}
+
+/* ---- Header ---- */
+
+.header-logo{
+	margin-top: 5%;
+}
+.header-slogan{
+	margin-top: 5%;
+}
+.header-content{
+
+}
+.content-col1,
+.content-col2{
+	width: 49%;
+}

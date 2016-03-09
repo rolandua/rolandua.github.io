@@ -3,7 +3,6 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Five Things You Should Know About HTML5 - Dive Into HTML5</title>
-	<base href="http://diveintohtml5.info/">
 
 <style type="text/css">
 @font-face {
@@ -94,7 +93,7 @@ footer{
 	margin-top: 1em;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
 	body { 
 		font-size: 85%;
 	}
@@ -116,7 +115,7 @@ footer{
 
 <!-- Table of content -->
 <div class="middle_block">
-	<a href="javascript:document.getElementById('table-of-contents').style.display=('block' ? 'none' : 'block');">show table of contents</a>
+	<a href="#" onclick="document.getElementById('table-of-contents').style.display=(document.getElementById('table-of-contents').style.display=='block' ? 'none' : 'block');return false;">show table of contents</a>
 	
 	<div id="table-of-contents">
 		<a href="table-of-contents.html">↑ Full table of contents</a><br>
