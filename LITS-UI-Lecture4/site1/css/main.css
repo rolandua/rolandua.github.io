@@ -8,6 +8,7 @@ body{
 }
 header,
 footer{
+	width: 100%;
 	text-align: center;
 }
 
@@ -24,5 +25,8 @@ footer{
 }
 .content-col1,
 .content-col2{
-	width: 49%;
+	margin: 2% auto;
+	width: 50%;
+	padding: 0 40px 0 20px;
+	text-align: center;
 }
