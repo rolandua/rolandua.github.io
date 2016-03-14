@@ -11,6 +11,8 @@ function checknode(tag,n){
 		default:
 			if (tag.indexOf(".")>=0)
 				return ((n.tagName.toLowerCase()==tag.split(".")[0]) && (n.className==tag.split(".")[1]));
+			else (tag.indexOf("#")>=0)
+				return ((n.tagName.toLowerCase()==tag.split("#")[0]) && (n.id==tag.split("#")[1]));
 			else
 				return (n.tagName.toLowerCase()==tag);
 	}
