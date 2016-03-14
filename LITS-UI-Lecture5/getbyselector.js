@@ -5,15 +5,23 @@ function checknode(tag,n){
 		return;
 	switch(tag.charAt(0)) {
 		case '.':
-			return (n.className==tag.slice(1));
+				var tags = tag.slice(1).split(".");
+				
+				for (i = 0; i < tags.length; i++)
+					if(!n.classList.contains(tags[i]))
+						return false;
+				return true;
 		case '#':
 			return (n.id==tag.slice(1));
 		default:
 			if (tag.indexOf(".")>=0){
 				var tags = tag.split(".");
-				(tags[0]!=n.tagName.toLowerCase() ? return false:);
+
+				if (tags[0]!=n.tagName.toLowerCase())
+					return false;
 				for (i = 1; i < tags.length; i++)
-					(n.classList.contains(tags[i])?:return false);
+					if(!n.classList.contains(tags[i]))
+						return false;
 				return true;
 			}
 			else if (tag.indexOf("#")>=0)
