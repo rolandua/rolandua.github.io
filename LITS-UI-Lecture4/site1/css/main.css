@@ -11,6 +11,9 @@ footer{
 	width: 100%;
 	text-align: center;
 }
+main{
+	margin: 3% 0;
+}
 
 /* ---- Header ---- */
 
@@ -18,10 +21,26 @@ footer{
 	margin-top: 5%;
 }
 .header-slogan{
-	margin-top: 5%;
+	margin-top: 3%;
+}
+.font-slogan{
+	font-size: 170%;
+	font-weight: 200;	
 }
 .header-content{
-
+	margin: 3% 0 4% 0;
+}
+.font-content{
+	font-size: 95%;
+	font-weight: 600;
+	color:#93828E;
+	letter-spacing: 0.001em;
+}
+.logo-size{
+	width: 15%;
+}
+div.block_group{
+	margin:3% 0;
 }
 .content-col1,
 .content-col2{
@@ -29,4 +48,13 @@ footer{
 	width: 50%;
 	padding: 0 40px 0 20px;
 	text-align: center;
+}
+.button-download{
+	width: 15rem;
+	height: 2.7rem;
+	color:#fff;
+	font: bold 120%/1.2 'PT Sans',Verdana,serif;
+	background-color: #96A8DB;
+	border-radius: .3rem;
+	border: 2px outset #96A8DB;
 }

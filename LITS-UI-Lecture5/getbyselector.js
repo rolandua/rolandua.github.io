@@ -6,7 +6,7 @@ function checknode(tag,n){
 	switch(tag.charAt(0)) {
 		case '.':
 				var tags = tag.slice(1).split(".");
-				
+
 				for (i = 0; i < tags.length; i++)
 					if(!n.classList.contains(tags[i]))
 						return false;
