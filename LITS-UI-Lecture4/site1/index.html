@@ -10,6 +10,41 @@
 <!--<link rel="stylesheet" type="text/css" href="css/normalize.css">-->
 <link rel="stylesheet" type="text/css" href="css/grid.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<script type="text/javascript">
+	function checknode(tag,n){
+		if (typeof(n.tagName)=="undefined")
+			return;
+		switch(tag.charAt(0)) {
+			case '.':
+				return (n.className==tag.slice(1));
+			case '#':
+				return (n.id==tag.slice(1));
+			default:
+				return (n.tagName.toLowerCase()==tag);
+		}
+		return false;
+	}
+	function findelement(tags,nodes) {
+		var i;
+		nodes = (typeof(nodes)=="undefined"?document.body.childNodes:nodes.childNodes);
+		console.log(tags.length);
+
+		for (i = 0; i < nodes.length; i++){
+			if (checknode(nodes[i],tags[0]))
+				if(tags.length>1){
+					findelement(tags.slice(1),nodes[i]);
+				}
+				else
+					console.log(nodes.tagName);
+			else
+				findelement(tags,nodes[i]);
+		}
+	}
+	function getBySelector(selectors){
+		selectors = selectors.split(" ");
+		findelement(selectors);
+	}
+</script>
 </head>
 
 <body>
