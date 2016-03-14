@@ -9,8 +9,13 @@ function checknode(tag,n){
 		case '#':
 			return (n.id==tag.slice(1));
 		default:
-			if (tag.indexOf(".")>=0)
-				return ((n.tagName.toLowerCase()==tag.split(".")[0]) && (n.className==tag.split(".")[1]));
+			if (tag.indexOf(".")>=0){
+				var tags = tag.split(".");
+				(tags[0]!=n.tagName.toLowerCase() ? return false:);
+				for (i = 1; i < tags.length; i++)
+					(n.classList.contains(tags[i])?:return false);
+				return true;
+			}
 			else if (tag.indexOf("#")>=0)
 				return ((n.tagName.toLowerCase()==tag.split("#")[0]) && (n.id==tag.split("#")[1]));
 			else
