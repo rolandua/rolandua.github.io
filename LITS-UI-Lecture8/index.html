@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>User Info Samples with Mustache</title>
+
+	<style>
+		.b{
+			border:1px solid black;
+			height: 100px;
+			margin: 10px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<button id="button1" name="b">Btn1</button>
+	<button id="button2" name="b">Btn2</button>
+	
+	<div class="b" id="block1">
+	Number of received messages: <span id="numMessages"></span>	
+
+	</div>
+
+	<div class="b" id="block2">
+	Last messages received from: <span id="senderName"></span>
+	<p>Message text: <span id="messageText"></span></p>	
+	</div>
+	<script src="main.js"></script>
+</body>
+</html>
