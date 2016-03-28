@@ -2,31 +2,99 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>User Info Samples with Mustache</title>
+	<title>EventBased Messenger</title>
 
 	<style>
-		.b{
-			border:1px solid black;
-			height: 100px;
-			margin: 10px;
+		html,body{
+			margin: 0;			
+			padding: 0;
+			height: 100%;
+			box-sizing:border-box;
+		}
+		div,ul,li{
+			margin: 0;
+			padding: 0;
+			box-sizing:border-box;
+		}
+		#compose-block{
+			height: 30px;
+			line-height: 30px;
+			border-bottom:1px solid grey;
+			vertical-align: middle;
+			padding: 0 5px;
+		}
+		.container{
+			width: 100%;
+			clear: both;
+		}
+		.block{
+			position: absolute;
+			top:0px;
+			bottom: 0px;
+			padding: 5px;
+			margin: 0px;
+			overflow-y:auto;
+		}
+		.msg--block{
+			position: absolute;
+			top: 31px;
+			bottom: 0px;
+		}
+		.msgfrom--list{
+			width: 30%;
+			left:0px;
+		}
+		.msg--body{
+			right: 0px;
+			width: 70%;
+			border-left:1px solid grey;
+		}
+		.msgfrom--list li{
+			display: block;
+			padding: 5px;
+			background-color: #ececec;
+			text-align: center;
+			cursor: pointer;
+		}
+		.msgfrom--list li:hover{
+			background-color: #e3e3e3;
+		}
+		.msgfrom--item--new{
+			font-weight: bold;
 		}
 	</style>
 
 </head>
 
 <body>
-	<button id="button1" name="b">Btn1</button>
-	<button id="button2" name="b">Btn2</button>
-	
-	<div class="b" id="block1">
-	Number of received messages: <span id="numMessages"></span>	
+<div id="compose-block" class="container">
 
+	<input class="input compose--name" name="name_sender" id="name_sender" placeholder="sender name" alt="Put sender name here" value="Don"></input>
+	<input type="textarea" class="compose ms" id="msg_body" name="msg_body" value="text"></input>
+	<button id="send-msg-btn" class="input messenger--btn">Send</button>
+
+	<button class="input messenger--revert"></button>
+
+</div>
+
+<div class="container msg--block">
+
+	<div class="block msgfrom--list">
+		User list:
+		<ul id="user-list" >
+			<li>System</li>
+			<li>System2</li>
+		</ul>
 	</div>
 
-	<div class="b" id="block2">
-	Last messages received from: <span id="senderName"></span>
-	<p>Message text: <span id="messageText"></span></p>	
+	<div id="msgBodyBlock" class="block msg--body">
+		<span class="msg-body--time">{{time}}</span>
+		<p>
+			<span class="msg-body--text">{{msg}}</span>
+		</p>		
 	</div>
+
+</div>
 	<script src="main.js"></script>
 </body>
 </html>
