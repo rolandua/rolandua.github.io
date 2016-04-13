@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>User Info Samples with Mustache</title>
+
+	<style>
+		ul{
+			list-style: none;
+			padding: 0px;
+		}
+		li.user{
+			border: 1px solid black;
+			margin: 10px;
+			padding: 20px;
+			cursor: pointer;
+		}
+		li.activeuser{
+			background-color: yellow;
+			font-weight: bold;
+		}
+		li.userwithborder{
+			border-width: 3px;
+		}
+		td{
+			vertical-align: top;
+		}
+		.useravater{
+			width: 4em;
+		}
+		.userinfo-block{
+			border-left: 2px dotted black;
+			padding-left: 0.4em;
+		}
+		.text-italic{
+			font-style: italic;
+		}
+		.userinfo_likes-list{
+			padding-left: 2em;
+			list-style: square outside;
+		}
+		.invisible{
+			visibility: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<table>
+		<tr>
+			<td>
+			<h1>User List</h1>
+			<ul id="usersList">
+				
+			</ul>
+			</td>
+			<td class="userinfo-block">
+				<div id="userInfo" class="invisible">
+					<h1>{{name}} {{second}}</h1>
+					<img src={{avatar}} class="useravater"></img>
+					<h3>{{info}}</h3>
+					<span class="text-italic">Usualy likes:</span> <ul class="userinfo_likes-list">{{#likes}}<li>{{.}}</li>{{/likes}}</ul>
+				</div>
+			</td>
+		</tr>
+	</table>
+<script type="text/javascript" src="mustache.min.js"></script>
+<script type="text/javascript">
+		
+var usersList = document.getElementById('usersList');
+
+var selectedUser;
+var userInfoBlock = document.getElementById('userInfo');
+var GlobalTemplate = userInfoBlock.innerHTML;
+//var fields = ['name','surname','info','avatar'];
+
+function ApiREST() {
+  var _method = "GET";
+  var _serverAdress = "http://heedio.me:8383";
+
+  this.setServer = function(address){
+  	if (isValidURL(address))
+  		_serverAdress = address;
+  	else
+  		return false;
+  	return true;
+  }
+
+  function isValidURL(url){
+    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+    if(RegExp.test(url)){
+        return true;
+    }else{
+        return false;
+    }
+} 
+
+	this.showUsers = function () {
+  		var xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function() {
+    		if (xhr.readyState == XMLHttpRequest.DONE) 
+        		JSON.parse(xhr.responseText).forEach(drawOneUser);
+		}
+
+		xhr.open('GET', _serverAdress, true);
+		xhr.send();
+	}
+
+
+function drawOneUser(content,index){
+	var fields = Object.keys(usersList);
+
+ 	var el = document.createElement(typeof (tag)!="undefined" ? tag : "li");
+	usersList.appendChild(el);
+	el.innerHTML = content.name;
+
+	el.classList.add("user");
+	//el.classList.add("userwithborder");
+
+	el.onclick = function(){
+		this.classList.add("activeuser");
+		userInfoBlock.classList.remove("invisible");
+
+		userInfoBlock.innerHTML = Mustache.to_html(GlobalTemplate, content);
+
+		if(selectedUser)
+			selectedUser.classList.remove("activeuser");
+		selectedUser = this;
+	}
+	return el;
+ }
+
+}
+
+</script>
+</body>
+</html>
