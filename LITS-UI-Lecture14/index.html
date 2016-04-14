@@ -8,6 +8,7 @@
 		ul{
 			list-style: none;
 			padding: 0px;
+			overflow: auto;
 		}
 		li.user{
 			border: 1px solid black;
@@ -64,6 +65,19 @@
 			</td>
 		</tr>
 	</table>
+<p>
+<form action="" id='formAdd'>
+	Name:
+	<input type="text" name="name"></input><p>
+	Second:
+	<input type="text" name="second"></input><p>
+	Info:
+	<input type="text" name="info"></input><p>
+	Avatar:
+	<input type="text" name="avatar"></input><p>
+	<input type="submit" value="Add">
+	<button type="button" id="getUsers">Get users</button>
+</form>
 <script type="text/javascript" src="mustache.min.js"></script>
 <script type="text/javascript">
 		
@@ -109,6 +123,7 @@ function ApiREST() {
 	}
 
 
+
 function drawOneUser(content,index){
 	var fields = Object.keys(usersList);
 
@@ -133,7 +148,25 @@ function drawOneUser(content,index){
  }
 
 }
+document.getElementById("getUsers").onclick = function(){
+	var a = new ApiREST();
+	a.showUsers();
+}
 
+document.getElementById("formAdd").addEventListener("submit", function(e){
+      	var xhr = new XMLHttpRequest();
+      	xhr.open('POST', _serverAdress, true);
+      	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      	alert('send');
+		xhr.onreadystatechange = function() {
+    		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status ==200) 
+        		alert("User added succesfully");
+		}
+
+		xhr.send("name="+document.getElementByName('name').value+"&second="+document.getElementByName('second')+"&info="+document.getElementByName('info'));
+		return false;
+});
 </script>
 </body>
 </html>
