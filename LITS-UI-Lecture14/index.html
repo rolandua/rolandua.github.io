@@ -66,7 +66,7 @@
 		</tr>
 	</table>
 <p>
-<form action="" id='formAdd'>
+<form id='formAdd'>
 	Name:
 	<input type="text" name="name"></input><p>
 	Second:
@@ -123,6 +123,19 @@ function ApiREST() {
 	}
 
 
+	this.addElement = function () {
+  		var xhr = new XMLHttpRequest();
+      
+      xhr.open('POST', _serverAdress, true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+		xhr.onreadystatechange = function() {
+    		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status ==200) 
+        		alert("User added succesfully");
+		}
+
+		xhr.send("name="+document.getElementsByName('name')[0].value+"&second="+document.getElementsByName('second')[0].value+"&info="+document.getElementsByName('info')[0].value);
+	}
 
 function drawOneUser(content,index){
 	var fields = Object.keys(usersList);
@@ -154,18 +167,10 @@ document.getElementById("getUsers").onclick = function(){
 }
 
 document.getElementById("formAdd").addEventListener("submit", function(e){
-      	var xhr = new XMLHttpRequest();
-      	xhr.open('POST', _serverAdress, true);
-      	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      	e.preventDefault();
 
-      	alert('send');
-		xhr.onreadystatechange = function() {
-    		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status ==200) 
-        		alert("User added succesfully");
-		}
-
-		xhr.send("name="+document.getElementByName('name').value+"&second="+document.getElementByName('second')+"&info="+document.getElementByName('info'));
-		return false;
+      	var a = new ApiREST();
+			a.addElement();
 });
 </script>
 </body>
