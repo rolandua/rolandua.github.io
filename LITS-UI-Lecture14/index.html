@@ -5,79 +5,115 @@
 	<title>User Info Samples with Mustache</title>
 
 	<style>
-		ul{
-			list-style: none;
-			padding: 0px;
-			overflow: auto;
+		html,body{
+			margin: 0;			
+			padding: 0;
+			height: 100%;
+			box-sizing:border-box;
 		}
-		li.user{
-			border: 1px solid black;
-			margin: 10px;
-			padding: 20px;
+		div,ul,li{
+			margin: 0;
+			padding: 0;
+			box-sizing:border-box;
+		}
+		#compose-block{
+			height: 30px;
+			line-height: 30px;
+			border-bottom:1px solid grey;
+			vertical-align: middle;
+			padding: 0 5px;
+		}
+		.container{
+			width: 100%;
+			clear: both;
+		}
+		.block{
+			position: absolute;
+			top:0px;
+			bottom: 0px;
+			padding: 5px;
+			margin: 0px;
+			overflow-y:auto;
+		}
+		.msg--block{
+			position: absolute;
+			top: 31px;
+			bottom: 0px;
+		}
+		.msgfrom--list{
+			width: 30%;
+			left:0px;
+			text-align: center;
+		}
+		.msg--body{
+			right: 0px;
+			width: 70%;
+			border-left:1px solid grey;
+		}
+		.msgfrom--list li{
+			display: block;
+			padding: 5px;
+			background-color: #ececec;
+			text-align: center;
 			cursor: pointer;
 		}
-		li.activeuser{
-			background-color: yellow;
+		.msgfrom--list li:hover{
+			background-color: #e3e3e3;
+		}
+		.msgfrom--item--new{
 			font-weight: bold;
 		}
-		li.userwithborder{
-			border-width: 3px;
-		}
-		td{
-			vertical-align: top;
-		}
-		.useravater{
-			width: 4em;
-		}
-		.userinfo-block{
-			border-left: 2px dotted black;
-			padding-left: 0.4em;
-		}
-		.text-italic{
-			font-style: italic;
-		}
-		.userinfo_likes-list{
-			padding-left: 2em;
-			list-style: square outside;
-		}
 		.invisible{
-			visibility: hidden;
+			opacity: 0;
+			height: 0;
+			transition:  opacity .5s, height 0s .5s;
 		}
 	</style>
 </head>
 
 <body>
-	<table>
-		<tr>
-			<td>
-			<h1>User List</h1>
-			<ul id="usersList">
-				
-			</ul>
-			</td>
-			<td class="userinfo-block">
-				<div id="userInfo" class="invisible">
-					<h1>{{name}} {{second}}</h1>
-					<img src={{avatar}} class="useravater"></img>
-					<h3>{{info}}</h3>
-					<span class="text-italic">Usualy likes:</span> <ul class="userinfo_likes-list">{{#likes}}<li>{{.}}</li>{{/likes}}</ul>
-				</div>
-			</td>
-		</tr>
-	</table>
-<p>
-<form id='formAdd'>
-	Name:
-	<input type="text" name="name"></input><p>
-	Second:
-	<input type="text" name="second"></input><p>
-	Info:
-	<input type="text" name="info"></input><p>
-	Avatar:
-	<input type="text" name="avatar"></input><p>
-	<input type="submit" value="Add">
-	<button type="button" id="getUsers">Get users</button>
-</form>
+<div id="compose-block" class="container">
+	
+	<button type="button" id="getUsers">Update users</button> 
+	<button type="button" id="editUser">Edit user</button>
+	<button type="button" id="addUser">Add user</button>
+
+</div>
+
+<div class="container msg--block">
+
+	<div class="block msgfrom--list">
+		<u>User list:</u>
+		<ul id="usersList" >
+		</ul>
+	</div>
+
+	<div id="msgBodyBlock" class="block msg--body">
+		<div id="userInfo" class="invisible">
+			<h1>{{name}} {{second}}</h1>
+			<img src={{avatar}} class="useravater"></img>
+			<h3>{{info}}</h3>
+			<span class="text-italic">Usualy likes:</span> <ul class="userinfo_likes-list">{{#likes}}<li>{{.}}</li>{{/likes}}</ul>
+		</div>
+		<div id="addUserBlock" class="invisible">
+			<form id='formAdd'>
+				Name:
+				<input type="text" name="name"></input><p>
+				Second:
+				<input type="text" name="second"></input><p>
+				Info:
+				<input type="text" name="info"></input><p>
+				Avatar:
+				<input type="text" name="avatar"></input><p>
+				<input type="hidden" name="editUserId" value="">
+
+				<input type="submit" value="Add">
+			</form>	
+		</div>	
+	</div>
+</div>
+
+
 <script type="text/javascript" src="mustache.min.js"></script>
 <script type="text/javascript">
 		
@@ -148,6 +184,7 @@ function drawOneUser(content,index){
 	//el.classList.add("userwithborder");
 
 	el.onclick = function(){
+		toggleElement("addUserBlock");
 		this.classList.add("activeuser");
 		userInfoBlock.classList.remove("invisible");
 
@@ -161,17 +198,45 @@ function drawOneUser(content,index){
  }
 
 }
+function toggleElement(e) {
+	if (!arguments[1])
+		document.getElementById(e).classList.add("invisible");
+	else
+		document.getElementById(e).classList.remove("invisible");
+}
+
+// - - - - Load users from start - - - -
+var a = new ApiREST();
+a.showUsers();
+
+// - - - - Set update users on button click - - - -
 document.getElementById("getUsers").onclick = function(){
-	var a = new ApiREST();
 	a.showUsers();
 }
 
+// - - - - Set insert|update users on submit form - - - -
 document.getElementById("formAdd").addEventListener("submit", function(e){
       	e.preventDefault();
 
-      	var a = new ApiREST();
 			a.addElement();
+			toggleElement('addUserBlock');	
 });
+
+// - - - - Enable add user form on button click - - - -
+document.getElementById("addUser").onclick = function(){
+	document.getElementsByName('editUserTrigger')[0].value = "false";
+
+	toggleElement('addUserBlock',true);
+	toggleElement('userInfo');
+}
+
+// - - - - Enable edit user form on button click - - - -
+document.getElementById("addUser").onclick = function(){
+	document.getElementsByName('editUserTrigger')[0].value = "false";
+
+	toggleElement('addUserBlock',true);
+	toggleElement('userInfo');
+}
 </script>
 </body>
 </html>
