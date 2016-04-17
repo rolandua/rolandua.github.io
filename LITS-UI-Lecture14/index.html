@@ -41,13 +41,13 @@
 			bottom: 0px;
 		}
 		.msgfrom--list{
-			width: 30%;
+			width: 45%;
 			left:0px;
 			text-align: center;
 		}
 		.msg--body{
 			right: 0px;
-			width: 70%;
+			width: 55%;
 			border-left:1px solid grey;
 		}
 		.msgfrom--list li{
@@ -63,10 +63,34 @@
 		.msgfrom--item--new{
 			font-weight: bold;
 		}
+		.useravatar--img{
+			width: 200px;
+		}
+		.addUserForm input{
+			display: block;	
+			width:70%;
+			margin: 5px;
+			font-size: 1.3em;
+		}
+		input.addUserForm--but{
+			display: inline-block;
+			width: 40%;
+			border: 1px;
+			border-radius: 5px;
+			background-color: blue;
+			font-size: 1em;
+			color: #fff;
+		}
+		.addUserForm--butRow{
+			display: block;
+			width: 70%;
+			text-align: center;	
+		}
 		.invisible{
+			overflow: hidden;			
 			opacity: 0;
 			height: 0;
-			transition:  opacity .5s, height 0s .5s;
+			transition: opacity .5s, height 0s .5s;
 		}
 	</style>
 </head>
@@ -74,9 +98,9 @@
 <body>
 <div id="compose-block" class="container">
 	
-	<button type="button" id="getUsers">Update users</button> 
-	<button type="button" id="editUser">Edit user</button>
-	<button type="button" id="addUser">Add user</button>
+	<button type="button" id="getUsersBut">Update users</button> 
+	<button type="button" id="editUserBut">Edit user</button>
+	<button type="button" id="addUserBut">Add user</button>
 
 </div>
 
@@ -91,23 +115,35 @@
 	<div id="msgBodyBlock" class="block msg--body">
 		<div id="userInfo" class="invisible">
 			<h1>{{name}} {{second}}</h1>
-			<img src={{avatar}} class="useravater"></img>
-			<h3>{{info}}</h3>
-			<span class="text-italic">Usualy likes:</span> <ul class="userinfo_likes-list">{{#likes}}<li>{{.}}</li>{{/likes}}</ul>
+			<img src={{avatar}} class="useravatar--img"></img>
+			<p>
+				<h3>Proffesion:</h3>
+				{{info}}
+			</p>
 		</div>
 		<div id="addUserBlock" class="invisible">
-			<form id='formAdd'>
-				Name:
-				<input type="text" name="name"></input><p>
-				Second:
-				<input type="text" name="second"></input><p>
-				Info:
-				<input type="text" name="info"></input><p>
-				Avatar:
-				<input type="text" name="avatar"></input><p>
+			<form id='formAdd' class="addUserForm">
+				<p>
+				<label for="name">Name:</label>
+				<input type="text" name="name"></input>
+				</p>
+				<p>
+				<label for="second">Surname:</label>
+				<input type="text" name="second"></input>
+				</p>
+				<p>
+				<label for="info">Proffesion (skills):</label>
+				<input type="text" name="info"></input>
+				</p>
+				<p>
+				<label for="avatar">Avatar:</label>
+				<input type="text" name="avatar"></input>
+				</p>
 				<input type="hidden" name="editUserId" value="">
-
-				<input type="submit" value="Add">
+				<span class="addUserForm--butRow">
+					<input type="submit" value="Save" class="addUserForm--but">
+					<input type="submit" value="Clear form" class="addUserForm--but">
+				</span>
 			</form>	
 		</div>	
 	</div>
@@ -116,51 +152,41 @@
 
 <script type="text/javascript" src="mustache.min.js"></script>
 <script type="text/javascript">
-		
-var usersList = document.getElementById('usersList');
+
+var usersList = $('#usersList');
 
 var selectedUser;
-var userInfoBlock = document.getElementById('userInfo');
+var userInfoBlock = $('#userInfo');
 var GlobalTemplate = userInfoBlock.innerHTML;
 //var fields = ['name','surname','info','avatar'];
 
 function ApiREST() {
-  var _method = "GET";
   var _serverAdress = "http://heedio.me:8383";
+  var dataArray;
+  var xhr = new XMLHttpRequest();
 
   this.setServer = function(address){
-  	if (isValidURL(address))
+  	if (isValidURL(address)){
   		_serverAdress = address;
+  		return true;
+  	}
   	else
   		return false;
-  	return true;
   }
 
-  function isValidURL(url){
-    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-
-    if(RegExp.test(url)){
-        return true;
-    }else{
-        return false;
-    }
-} 
-
 	this.showUsers = function () {
-  		var xhr = new XMLHttpRequest();
 
 		xhr.onreadystatechange = function() {
-    		if (xhr.readyState == XMLHttpRequest.DONE) 
-        		JSON.parse(xhr.responseText).forEach(drawOneUser);
-		}
-
+    		if (xhr.readyState == XMLHttpRequest.DONE) {
+    			dataArray = JSON.parse(xhr.responseText);
+    			dataArray.forEach(drawOneUser);
+    		}
+		}	
 		xhr.open('GET', _serverAdress, true);
 		xhr.send();
 	}
 
-
-	this.addElement = function () {
-  		var xhr = new XMLHttpRequest();
+	this.addElementRow = function () {
       
       xhr.open('POST', _serverAdress, true);
       xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -170,39 +196,98 @@ function ApiREST() {
         		alert("User added succesfully");
 		}
 
-		xhr.send("name="+document.getElementsByName('name')[0].value+"&second="+document.getElementsByName('second')[0].value+"&info="+document.getElementsByName('info')[0].value);
+		xhr.send("name="+document.getElementsByName('name')[0].value+"&second="+document.getElementsByName('second')[0].value+"&info="+document.getElementsByName('info')[0].value+"&avatar="+document.getElementsByName('avatar')[0].value);
 	}
 
-function drawOneUser(content,index){
-	var fields = Object.keys(usersList);
+	this.updateElementRow = function () {
+      
+      xhr.open('PUT', _serverAdress+"/"+document.getElementsByName('editUserId')[0].value, true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
- 	var el = document.createElement(typeof (tag)!="undefined" ? tag : "li");
-	usersList.appendChild(el);
-	el.innerHTML = content.name;
+		xhr.onreadystatechange = function() {
+    		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status ==200) 
+        		alert("User edited succesfully");
+		}
 
-	el.classList.add("user");
-	//el.classList.add("userwithborder");
-
-	el.onclick = function(){
-		toggleElement("addUserBlock");
-		this.classList.add("activeuser");
-		userInfoBlock.classList.remove("invisible");
-
-		userInfoBlock.innerHTML = Mustache.to_html(GlobalTemplate, content);
-
-		if(selectedUser)
-			selectedUser.classList.remove("activeuser");
-		selectedUser = this;
+		xhr.send("name="+document.getElementsByName('name')[0].value+"&second="+document.getElementsByName('second')[0].value+"&info="+document.getElementsByName('info')[0].value+"&avatar="+document.getElementsByName('avatar')[0].value);
 	}
-	return el;
- }
+
+	this.getElementParameter = function(id,field) {
+		var n;
+		dataArray.forEach(function(content){
+			if (content.id == id){
+				n = content[field];
+				return;
+			}
+		});
+		return n;
+	}
+
+	function drawOneUser(content,index){
+		var fields = Object.keys(usersList);
+
+	 	var el = document.createElement(typeof (tag)!="undefined" ? tag : "li");
+		usersList.appendChild(el);
+		el.innerHTML = content.name+" "+content.second;
+		el.dataset.id = content.id;
+
+		el.classList.add("user");
+		//el.classList.add("userwithborder");
+
+		el.onclick = function(){
+			toggleElement("addUserBlock");
+			this.classList.add("activeuser");	
+			userInfoBlock.classList.remove("invisible");
+
+			userInfoBlock.innerHTML = Mustache.to_html(GlobalTemplate, content);
+
+			if(selectedUser)
+				selectedUser.classList.remove("activeuser");
+			selectedUser = this;
+		}
+		return el;
+	 }
 
 }
+// - - - - Helpers - - - - 
 function toggleElement(e) {
 	if (!arguments[1])
-		document.getElementById(e).classList.add("invisible");
+		$("#"+e).classList.add("invisible");
 	else
-		document.getElementById(e).classList.remove("invisible");
+		$("#"+e).classList.remove("invisible");
+}
+
+function isValidURL(url){
+    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+    if(RegExp.test(url))
+        return true;
+    return false;
+}
+
+function $(id) {
+	if(id.split(" ").length>1)return document.querySelectorAll(id);
+	if (id.substring(0,1)=='#')return document.getElementById(id.substring(1));
+	if (id.substring(0,1)=='.')return document.getElementsByClassName(id.substring(1));
+	if (id.substring(0,1)=='<')return document.getElementsByTagName(id.substring(1,id.length-1));
+	return false;
+}
+
+function hasClass(ele,cls) { 
+    return !!ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function removeClass(element, className) {
+    if (element && hasClass(element,className)) {
+        var reg = new RegExp('(\\s|^)'+className+'(\\s|$)');
+        element.className=element.className.replace(reg,'');
+    }
+}
+
+function addClass(element, className) {
+    if (element && !hasClass(element,className)) {
+        element.className += ' '+className;
+    }
 }
 
 // - - - - Load users from start - - - -
@@ -210,29 +295,45 @@ var a = new ApiREST();
 a.showUsers();
 
 // - - - - Set update users on button click - - - -
-document.getElementById("getUsers").onclick = function(){
+$("#getUsersBut").onclick = function(){
+	usersList.innerHTML = "";
 	a.showUsers();
 }
 
 // - - - - Set insert|update users on submit form - - - -
-document.getElementById("formAdd").addEventListener("submit", function(e){
-      	e.preventDefault();
+$("#formAdd").addEventListener("submit", function(e){
+	e.preventDefault();
 
-			a.addElement();
-			toggleElement('addUserBlock');	
+	if (Boolean(document.getElementsByName('editUserId')[0].value))
+		a.updateElementRow(parseInt(document.getElementsByName('editUserId')[0].value));
+	else
+		a.addElementRow();
+	toggleElement('addUserBlock');	
 });
 
 // - - - - Enable add user form on button click - - - -
-document.getElementById("addUser").onclick = function(){
-	document.getElementsByName('editUserTrigger')[0].value = "false";
+$("#addUserBut").onclick = function(){
 
+	$("#formAdd").reset();
+	document.getElementsByName('editUserId')[0].value = null;
+	
 	toggleElement('addUserBlock',true);
 	toggleElement('userInfo');
 }
 
 // - - - - Enable edit user form on button click - - - -
-document.getElementById("addUser").onclick = function(){
-	document.getElementsByName('editUserTrigger')[0].value = "false";
+$("#editUserBut").onclick = function(){
+	if(!selectedUser){
+		alert("Please select user");
+		return false;
+	}
+	
+	document.getElementsByName('editUserId')[0].value = selectedUser.dataset.id;
+
+	document.getElementsByName('name')[0].value = a.getElementParameter(selectedUser.dataset.id,'name');
+	document.getElementsByName('info')[0].value = a.getElementParameter(selectedUser.dataset.id,'info');
+	document.getElementsByName('second')[0].value = a.getElementParameter(selectedUser.dataset.id,'second');
+	document.getElementsByName('avatar')[0].value = a.getElementParameter(selectedUser.dataset.id,'avatar');
 
 	toggleElement('addUserBlock',true);
 	toggleElement('userInfo');
